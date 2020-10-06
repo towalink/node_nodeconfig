@@ -7,7 +7,7 @@ with open('README.md', 'r') as f:
 
 setup_kwargs = {
     'name': 'towalink_nodeconfig',
-    'version': '0.1.1',
+    'version': '0.1.2',
     'author': 'The Towalink Project',
     'author_email': 'pypi.nodeconfig@towalink.net',
     'description': 'managing the config files and services of a Towalink Node',

@@ -88,7 +88,11 @@ class ServiceManager():
     def update_bird(self, force_reload=False):
         """Update Bird configuration files and activate changes"""
         logger.debug('Updating Bird if needed')
-        files_new, files_changed, files_delete = self.fileupdater.update_files(self.confdir, '/etc', filter_prefix='bird', filter_suffix='.conf')        
+        if os.path.isdir('/etc/bird'): # on Debian the path is /etc/bird; if it exists, use it
+            dest_path = '/etc/bird'
+        else:
+            dest_path = '/etc'
+        files_new, files_changed, files_delete = self.fileupdater.update_files(self.confdir, dest_path, filter_prefix='bird', filter_suffix='.conf')        
         if force_reload or (len(files_new) + len(files_changed) + len(files_delete) > 0):
             logger.info(f'Reloading Bird configuration due to config file updates: {len(files_changed)} changed, {len(files_new)} new, {len(files_delete)} deleted')
             self.exechelper.reload_service('bird')
